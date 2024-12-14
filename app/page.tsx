@@ -1,7 +1,14 @@
-export default function Home() {
+import List from "./components/List";
+
+
+export default async function Home() {
+
+  const postsResponse = await fetch('https://jsonfakery.com/blogs')
+  const posts = await postsResponse.json()
+
   return (
     <div>
-      Home page
+      <List posts={posts} />
     </div>
   );
 }
