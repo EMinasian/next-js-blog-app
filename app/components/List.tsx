@@ -9,17 +9,19 @@ const POSTS_PER_PAGE = [9, 12, 15, 18]
 export default function List({ posts }: { posts: Array<PostType>}) {
 
   const searchRef = useRef<HTMLInputElement>(null)
+  const postsViewed = useRef(POSTS_PER_PAGE[0])
 
   const [currentpage, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(9)
+  const [perPage, setPerPage] = useState(POSTS_PER_PAGE[0])
   const [totalPosts, setPosts] = useState(posts)
 
   const pages = Math.floor(totalPosts.length / perPage) + 1
   const postsOfPage = totalPosts.slice(perPage * (currentpage - 1), currentpage * perPage)
+  postsViewed.current = currentpage * perPage
 
   function perPageButton(postsNum: number) {
     return (
-      <button onClick={() => {setPerPage(postsNum)}}>{postsNum}</button>
+      <button onClick={() => {handlePostNumChange(postsNum)}}>{postsNum}</button>
     )
   } 
 
@@ -41,6 +43,12 @@ export default function List({ posts }: { posts: Array<PostType>}) {
   function handleReset() {
     setPosts(posts)
     setPage(1)
+  }
+
+  function handlePostNumChange(postsNum: number) {
+    const newPage = Math.floor(postsViewed.current/postsNum) + 1
+    setPerPage(postsNum)
+    setPage(newPage)
   }
   
   return (
