@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react"
-import ListItem from "../components/ListItem"
+import ListItem from "../../components/ListItem"
 
 const PER_PAGE = 9
 
