@@ -1,28 +1,33 @@
 'use client'
 import { useRouter } from "next/navigation"
-import { useTransition } from "react"
+import { useOptimistic, useTransition } from "react"
 
 export default function Pagination({ pageCurrent, pages }: { pageCurrent: number, pages: number }) {
 
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [optimisticPage, setOptimisticPage] = useOptimistic(pageCurrent)
 
   function prevPage() {
     startTransition(() => {
-      router.push(`/pagination-examples/server-side?page=${pageCurrent - 1}`)
+      const prevPageValue = optimisticPage - 1
+      setOptimisticPage(prevPageValue)
+      router.push(`/pagination-examples/server-side?page=${prevPageValue}`)
     })
   }
 
   function nextPage() {
     startTransition(() => {
-      router.push(`/pagination-examples/server-side?page=${pageCurrent + 1}`)
+      const nextPageValue = optimisticPage + 1
+      setOptimisticPage(nextPageValue)
+      router.push(`/pagination-examples/server-side?page=${nextPageValue}`)
     })
   }
 
   return (
     <div className="flex justify-center p-4 gap-4">
       {pageCurrent > 1 && <button onClick={prevPage}>Previous</button>}
-      page {pageCurrent} of {pages}
+      {`${isPending ? 'Loading ' : ''}page ${optimisticPage} of ${pages}`}
       {pageCurrent < pages && <button onClick={nextPage}>Next</button>}
     </div>
   )
