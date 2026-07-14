@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
 import { useEffect, useId, useRef, useState } from "react"
 
 const PAGINATION_ROUTES = [
@@ -16,6 +17,12 @@ export default function Nav() {
   const menuId = useId()
   const triggerRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   function closeMenu(options: { refocus?: boolean } = {}) {
     setOpen(false)
@@ -56,7 +63,7 @@ export default function Nav() {
   const isPaginationActive = pathname?.startsWith("/pagination-examples")
 
   const navLinkClass = (isActive: boolean) =>
-    `rounded-md px-3 py-2 text-sm transition-colors hover:bg-subtle-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 ${
+    `rounded-md px-3 py-2 text-sm transition-colors hover:bg-subtle-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 ${
       isActive ? "font-semibold text-foreground" : "text-muted"
     }`
 
@@ -105,7 +112,7 @@ export default function Nav() {
                     href={route.href}
                     role="menuitem"
                     onClick={() => closeMenu()}
-                    className={`block px-4 py-2 text-sm transition-colors hover:bg-subtle-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foreground/40 ${
+                    className={`block px-4 py-2 text-sm transition-colors hover:bg-subtle-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent/50 ${
                       pathname === route.href
                         ? "font-semibold text-foreground"
                         : "text-muted"
@@ -117,6 +124,59 @@ export default function Nav() {
               </div>
             )}
           </div>
+        </div>
+
+        <div className="ml-auto">
+          <button
+            type="button"
+            aria-label={
+              mounted && resolvedTheme === "dark"
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            }
+            onClick={() =>
+              setTheme(resolvedTheme === "dark" ? "light" : "dark")
+            }
+            className="rounded-md p-2 text-muted transition-colors hover:bg-subtle-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+          >
+            {mounted && resolvedTheme === "dark" ? (
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="M4.93 4.93l1.41 1.41" />
+                <path d="M17.66 17.66l1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="M4.93 19.07l1.41-1.41" />
+                <path d="M17.66 6.34l1.41-1.41" />
+              </svg>
+            ) : (
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" />
+              </svg>
+            )}
+          </button>
         </div>
       </nav>
     </header>

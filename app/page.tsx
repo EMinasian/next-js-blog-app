@@ -54,7 +54,7 @@ export default async function Home() {
           <Link
             key={example.href}
             href={example.href}
-            className="block rounded-lg border border-border bg-surface p-4 transition-colors hover:bg-subtle-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40"
+            className="block rounded-lg border border-border bg-surface p-4 transition-colors hover:bg-subtle-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
           >
             <span className="font-serif text-lg font-semibold">{example.title}</span>
             <p className="mt-1 text-sm text-muted">{example.description}</p>

@@ -15,6 +15,10 @@ export default {
         border: "var(--border)",
         muted: "var(--muted)",
         "subtle-accent": "var(--subtle-accent)",
+        accent: "var(--accent)",
+        "accent-foreground": "var(--accent-foreground)",
+        link: "var(--link)",
+        destructive: "var(--destructive)",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "Arial", "Helvetica", "sans-serif"],

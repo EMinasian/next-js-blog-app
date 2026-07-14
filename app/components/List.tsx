@@ -77,7 +77,7 @@ export default function List({ posts }: { posts: Array<PostType>}) {
             id="search"
             name="search"
             ref={searchRef}
-            className="rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40"
+            className="rounded-md border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
           />
         </div>
         <Button type="button" variant="primary" onClick={handleSearch}>
