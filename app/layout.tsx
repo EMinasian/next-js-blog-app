@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lora } from "next/font/google";
+import Nav from "./components/Nav";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +13,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Blog Next Js",
-  description: "A Next Js app to display blogs",
+  title: {
+    template: "%s | Blog Next Js",
+    default: "Blog Next Js",
+  },
+  description:
+    "A Next Js blog app demonstrating client-side, load-more, and server-side pagination patterns.",
 };
 
 export default function RootLayout({
@@ -25,8 +35,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} antialiased`}
       >
+        <Nav />
         {children}
       </body>
     </html>

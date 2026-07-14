@@ -1,8 +1,9 @@
 'use client'
 import { useRouter } from "next/navigation"
 import { useOptimistic, useTransition } from "react"
+import Pagination from "@/app/components/Pagination"
 
-export default function Pagination({ pageCurrent, pages }: { pageCurrent: number, pages: number }) {
+export default function ServerSidePagination({ pageCurrent, pages }: { pageCurrent: number, pages: number }) {
 
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -25,10 +26,12 @@ export default function Pagination({ pageCurrent, pages }: { pageCurrent: number
   }
 
   return (
-    <div className="flex justify-center p-4 gap-4">
-      {pageCurrent > 1 && <button onClick={prevPage}>Previous</button>}
-      {`${isPending ? 'Loading ' : ''}page ${optimisticPage} of ${pages}`}
-      {pageCurrent < pages && <button onClick={nextPage}>Next</button>}
-    </div>
+    <Pagination
+      currentPage={optimisticPage}
+      totalPages={pages}
+      onPrev={prevPage}
+      onNext={nextPage}
+      isPending={isPending}
+    />
   )
 }
