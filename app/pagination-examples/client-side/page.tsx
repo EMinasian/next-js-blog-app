@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ListItem from "../../../components/ListItem";
 import Pagination from "../../../components/Pagination";
 import PostsGrid from "../../../components/PostsGrid";
+import PostsGridSkeleton from "../../../components/PostsGridSkeleton";
 import PageContainer from "../../../components/PageContainer";
 import { PostType } from "../../types";
 import { getTotalPages } from "../../../lib/pagination";
@@ -12,12 +13,14 @@ const PER_PAGE = 9;
 export default function ClientSide() {
   const [pageCurrent, setPageCurrent] = useState(1);
   const [posts, setPosts] = useState<PostType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       const postsResponse = await fetch("https://jsonfakery.com/blogs");
       const posts: PostType[] = await postsResponse.json();
       setPosts(posts);
+      setIsLoading(false);
     }
     fetchData();
   }, []);
@@ -33,14 +36,19 @@ export default function ClientSide() {
       <h1 className="mb-6 font-serif text-3xl font-semibold tracking-tight">
         Client-side Pagination
       </h1>
-      <PostsGrid>
-        {postsOfPage.map((post) => (
-          <ListItem key={post.id} post={post} />
-        ))}
-      </PostsGrid>
+      {isLoading ? (
+        <PostsGridSkeleton count={PER_PAGE} />
+      ) : (
+        <PostsGrid>
+          {postsOfPage.map((post) => (
+            <ListItem key={post.id} post={post} />
+          ))}
+        </PostsGrid>
+      )}
       <Pagination
         currentPage={pageCurrent}
         totalPages={pages}
+        isPending={isLoading}
         onPrev={() => setPageCurrent((page) => Math.max(1, page - 1))}
         onNext={() => setPageCurrent((page) => Math.min(pages, page + 1))}
       />

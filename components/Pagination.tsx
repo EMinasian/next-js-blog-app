@@ -31,10 +31,14 @@ export default function Pagination({
 
       <span
         aria-live="polite"
-        className={`text-sm ${isPending ? "text-muted" : "text-foreground"}`}
+        className={`inline-flex items-center gap-2 text-sm ${isPending ? "text-muted" : "text-foreground"}`}
       >
-        {isPending ? "Loading… " : ""}
-        Page {currentPage} of {totalPages}
+        {isPending ? (
+          <span
+            aria-hidden="true"
+            className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-border border-t-accent"
+          />
+        ) :`Page ${currentPage} of ${totalPages}`} 
       </span>
 
       <button
