@@ -10,7 +10,9 @@ export default function LoadMoreButton({ sets }: { sets: number }) {
 
   function handleClick() {
     startTransition(() => {
-      router.push(`/pagination-examples/load-more?sets=${sets + 1}`);
+      router.push(`/pagination-examples/load-more?sets=${sets + 1}`, {
+        scroll: false,
+      });
     });
   }
 
