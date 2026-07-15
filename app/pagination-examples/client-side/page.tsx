@@ -7,6 +7,7 @@ import PostsGridSkeleton from "../../../components/PostsGridSkeleton";
 import PageContainer from "../../../components/PageContainer";
 import Button from "../../../components/Button";
 import RouteInfoPopup from "../../../components/RouteInfoPopup";
+import { CLIENT_SIDE_PAGINATION_ROUTE_INFO } from "../../../components/RouteInfoPopup.consts";
 import { PostType } from "../../types";
 import { getTotalPages } from "../../../lib/pagination";
 
@@ -47,28 +48,7 @@ export default function ClientSide() {
 
   return (
     <PageContainer>
-      <RouteInfoPopup
-        title="Client-side Pagination"
-        sections={[
-          {
-            label: "Rendering",
-            text: "Client Component — the fetch happens in the browser, not on the server.",
-          },
-          {
-            label: "Hooks",
-            text: "useEffect (wrapping a useCallback fetcher) loads the entire post list once on mount; useState holds posts/loading/error so retries just re-run the fetch.",
-          },
-          {
-            label: "Caching",
-            text: "None — this never touches Next's Data Cache, since the request is made client-side rather than in a Server Component.",
-          },
-          {
-            label: "Why it helps",
-            text: "Pagination afterward is just posts.slice() over data already in memory, so page changes are instant with no server round trip — at the cost of downloading the whole dataset before the first render.",
-          },
-        ]}
-        githubUrl="https://github.com/EMinasian/next-js-blog-app/blob/main/app/pagination-examples/client-side/page.tsx"
-      />
+      <RouteInfoPopup {...CLIENT_SIDE_PAGINATION_ROUTE_INFO} />
       <h1 className="mb-6 font-serif text-3xl font-semibold tracking-tight">
         Client-side Pagination
       </h1>
