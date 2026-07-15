@@ -21,6 +21,9 @@ export default function Nav() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    // next-themes' hydration-safe mount flag: no async boundary is possible here,
+    // since the whole point is to flip immediately after the first client render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 

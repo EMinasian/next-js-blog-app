@@ -91,7 +91,7 @@ export const LOAD_MORE_PAGINATION_ROUTE_INFO: RouteInfoContent = {
     },
     {
       label: "Caching",
-      text: "Wrapped in unstable_cache tagged ['posts'] — repeat requests reuse Next's Data Cache instead of re-hitting the API, and can all be invalidated at once with revalidateTag('posts').",
+      text: "Wrapped in unstable_cache tagged ['posts'] — repeat requests reuse Next's Data Cache instead of re-hitting the API, and can all be invalidated at once with revalidateTag('posts', 'max').",
     },
     {
       label: "Why it helps",

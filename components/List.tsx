@@ -12,7 +12,6 @@ const POSTS_PER_PAGE = [9, 12, 15, 18];
 
 export default function List({ posts }: { posts: Array<PostType> }) {
   const searchRef = useRef<HTMLInputElement>(null);
-  const postsViewed = useRef(POSTS_PER_PAGE[0]);
 
   const [currentpage, setPage] = useState(1);
   const [perPage, setPerPage] = useState(POSTS_PER_PAGE[0]);
@@ -23,7 +22,6 @@ export default function List({ posts }: { posts: Array<PostType> }) {
     perPage * (currentpage - 1),
     currentpage * perPage,
   );
-  postsViewed.current = currentpage * perPage;
 
   function handleSearch() {
     if (!searchRef.current?.value) {
@@ -48,7 +46,7 @@ export default function List({ posts }: { posts: Array<PostType> }) {
   }
 
   function handlePostNumChange(postsNum: number) {
-    const newPage = Math.floor(postsViewed.current / postsNum) + 1;
+    const newPage = Math.floor((currentpage * perPage) / postsNum) + 1;
     setPerPage(postsNum);
     setPage(newPage);
   }

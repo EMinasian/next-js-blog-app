@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ListItem from "../../../components/ListItem";
 import Pagination from "../../../components/Pagination";
 import PostsGrid from "../../../components/PostsGrid";
@@ -18,27 +18,31 @@ export default function ClientSide() {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const postsResponse = await fetch("https://jsonfakery.com/blogs");
-      if (!postsResponse.ok) {
-        throw new Error("Failed to fetch posts");
-      }
-      const posts: PostType[] = await postsResponse.json();
-      setPosts(posts);
-    } catch {
-      setError("We couldn't load posts. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    (async () => {
+      try {
+        const postsResponse = await fetch("https://jsonfakery.com/blogs");
+        if (!postsResponse.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        const posts: PostType[] = await postsResponse.json();
+        setPosts(posts);
+        setError(null);
+      } catch {
+        setError("We couldn't load posts. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [retryCount]);
+
+  function retry() {
+    setIsLoading(true);
+    setError(null);
+    setRetryCount((count) => count + 1);
+  }
 
   const pages = getTotalPages(posts.length, PER_PAGE);
   const postsOfPage = posts.slice(
@@ -55,7 +59,7 @@ export default function ClientSide() {
       {error ? (
         <div className="flex flex-col items-center gap-4 rounded-lg border border-dashed border-border bg-subtle-accent px-6 py-16 text-center">
           <p className="text-sm text-destructive">{error}</p>
-          <Button type="button" variant="primary" onClick={fetchData}>
+          <Button type="button" variant="primary" onClick={retry}>
             Try again
           </Button>
         </div>
