@@ -3,6 +3,7 @@ import List from "../../components/List";
 import PageContainer from "../../components/PageContainer";
 import RouteInfoPopup from "../../components/RouteInfoPopup";
 import { POSTS_ROUTE_INFO } from "../../components/RouteInfoPopup.consts";
+import { getBaseUrl } from "../../lib/get-base-url";
 import { PostType } from "../types";
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function PostsPage() {
-  const postsResponse = await fetch("http://localhost:3000/api/posts");
+  const postsResponse = await fetch(`${getBaseUrl()}/api/posts`);
   if (!postsResponse.ok) {
     throw new Error("Failed to fetch posts");
   }

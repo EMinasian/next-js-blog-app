@@ -6,6 +6,7 @@ import RouteInfoPopup from "@/components/RouteInfoPopup";
 import { LOAD_MORE_PAGINATION_ROUTE_INFO } from "@/components/RouteInfoPopup.consts";
 import LoadMoreButton from "./LoadMoreButton";
 import { unstable_cache } from "next/cache";
+import { getBaseUrl } from "@/lib/get-base-url";
 import { PostType } from "@/app/types";
 
 const ITEMS_PER_SET = 9;
@@ -26,7 +27,7 @@ export default async function LoadMore({
 
   const getCachedData = unstable_cache(
     async (): Promise<PostsResponse> => {
-      const postsResponse = await fetch("http://localhost:3000/api/posts");
+      const postsResponse = await fetch(`${getBaseUrl()}/api/posts`);
       if (!postsResponse.ok) {
         throw new Error("Failed to fetch posts");
       }
