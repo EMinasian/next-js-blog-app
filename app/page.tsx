@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageContainer from "./components/PageContainer";
-import { getButtonClassName } from "./components/Button";
+import PageContainer from "../components/PageContainer";
+import { getButtonClassName } from "../components/Button";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -13,7 +13,8 @@ const PAGINATION_EXAMPLES = [
   {
     href: "/pagination-examples/client-side",
     title: "Client-side",
-    description: "Fetches every post once, then pages through it in the browser.",
+    description:
+      "Fetches every post once, then pages through it in the browser.",
   },
   {
     href: "/pagination-examples/load-more",
@@ -23,7 +24,8 @@ const PAGINATION_EXAMPLES = [
   {
     href: "/pagination-examples/server-side",
     title: "Server-side",
-    description: "Each page is requested from the server with useOptimistic pending state.",
+    description:
+      "Each page is requested from the server with useOptimistic pending state.",
   },
 ];
 
@@ -41,7 +43,10 @@ export default async function Home() {
       </p>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Link href="/posts" className={getButtonClassName({ variant: "primary" })}>
+        <Link
+          href="/posts"
+          className={getButtonClassName({ variant: "primary" })}
+        >
           Browse Posts
         </Link>
       </div>
@@ -56,7 +61,9 @@ export default async function Home() {
             href={example.href}
             className="block rounded-lg border border-border bg-surface p-4 transition-colors hover:bg-subtle-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
           >
-            <span className="font-serif text-lg font-semibold">{example.title}</span>
+            <span className="font-serif text-lg font-semibold">
+              {example.title}
+            </span>
             <p className="mt-1 text-sm text-muted">{example.description}</p>
           </Link>
         ))}

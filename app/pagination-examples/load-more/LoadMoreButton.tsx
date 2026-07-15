@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { useTransition } from "react"
-import { useRouter } from "next/navigation"
-import Button from "@/app/components/Button"
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import Button from "@/components/Button";
 
 export default function LoadMoreButton({ sets }: { sets: number }) {
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   function handleClick() {
     startTransition(() => {
-      router.push(`/pagination-examples/load-more?sets=${sets + 1}`)
-    })
+      router.push(`/pagination-examples/load-more?sets=${sets + 1}`);
+    });
   }
 
   return (
@@ -25,5 +25,5 @@ export default function LoadMoreButton({ sets }: { sets: number }) {
         {isPending ? "Loading…" : "Load More"}
       </Button>
     </div>
-  )
+  );
 }

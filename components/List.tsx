@@ -1,55 +1,56 @@
-'use client'
+"use client";
 
-import { useRef, useState } from "react"
-import ListItem from "./ListItem"
-import Pagination from "./Pagination"
-import PostsGrid from "./PostsGrid"
-import Button from "./Button"
-import { PostType } from "../types"
-import { getTotalPages } from "../lib/pagination"
+import { useRef, useState } from "react";
+import ListItem from "./ListItem";
+import Pagination from "./Pagination";
+import PostsGrid from "./PostsGrid";
+import Button from "./Button";
+import { PostType } from "../app/types";
+import { getTotalPages } from "../lib/pagination";
 
-const POSTS_PER_PAGE = [9, 12, 15, 18]
+const POSTS_PER_PAGE = [9, 12, 15, 18];
 
-export default function List({ posts }: { posts: Array<PostType>}) {
+export default function List({ posts }: { posts: Array<PostType> }) {
+  const searchRef = useRef<HTMLInputElement>(null);
+  const postsViewed = useRef(POSTS_PER_PAGE[0]);
 
-  const searchRef = useRef<HTMLInputElement>(null)
-  const postsViewed = useRef(POSTS_PER_PAGE[0])
+  const [currentpage, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(POSTS_PER_PAGE[0]);
+  const [totalPosts, setPosts] = useState(posts);
 
-  const [currentpage, setPage] = useState(1)
-  const [perPage, setPerPage] = useState(POSTS_PER_PAGE[0])
-  const [totalPosts, setPosts] = useState(posts)
-
-  const pages = getTotalPages(totalPosts.length, perPage)
-  const postsOfPage = totalPosts.slice(perPage * (currentpage - 1), currentpage * perPage)
-  postsViewed.current = currentpage * perPage
+  const pages = getTotalPages(totalPosts.length, perPage);
+  const postsOfPage = totalPosts.slice(
+    perPage * (currentpage - 1),
+    currentpage * perPage,
+  );
+  postsViewed.current = currentpage * perPage;
 
   function handleSearch() {
-
     if (!searchRef.current?.value) {
-      return
+      return;
     }
 
-    const reg = RegExp(searchRef.current?.value)
-    const searchedPosts = totalPosts.filter(post => {
-      const value = reg.test(post?.title)
-      return value
-    })
-    setPosts(searchedPosts)
-    setPage(1)
+    const reg = RegExp(searchRef.current?.value);
+    const searchedPosts = totalPosts.filter((post) => {
+      const value = reg.test(post?.title);
+      return value;
+    });
+    setPosts(searchedPosts);
+    setPage(1);
   }
 
   function handleReset() {
-    setPosts(posts)
-    setPage(1)
+    setPosts(posts);
+    setPage(1);
     if (searchRef.current) {
-      searchRef.current.value = ""
+      searchRef.current.value = "";
     }
   }
 
   function handlePostNumChange(postsNum: number) {
-    const newPage = Math.floor(postsViewed.current/postsNum) + 1
-    setPerPage(postsNum)
-    setPage(newPage)
+    const newPage = Math.floor(postsViewed.current / postsNum) + 1;
+    setPerPage(postsNum);
+    setPage(newPage);
   }
 
   return (
@@ -90,7 +91,9 @@ export default function List({ posts }: { posts: Array<PostType>}) {
 
       {postsOfPage.length > 0 ? (
         <PostsGrid>
-          {postsOfPage.map(post => <ListItem key={post.id} post={post} />)}
+          {postsOfPage.map((post) => (
+            <ListItem key={post.id} post={post} />
+          ))}
         </PostsGrid>
       ) : (
         <div className="rounded-lg border border-dashed border-border bg-subtle-accent px-6 py-16 text-center text-sm text-muted">
@@ -101,9 +104,9 @@ export default function List({ posts }: { posts: Array<PostType>}) {
       <Pagination
         currentPage={currentpage}
         totalPages={pages}
-        onPrev={() => setPage(page => Math.max(1, page - 1))}
-        onNext={() => setPage(page => Math.min(pages, page + 1))}
+        onPrev={() => setPage((page) => Math.max(1, page - 1))}
+        onNext={() => setPage((page) => Math.min(pages, page + 1))}
       />
     </div>
-  )
+  );
 }

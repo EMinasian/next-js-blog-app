@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import List from "../components/List";
-import PageContainer from "../components/PageContainer";
+import List from "../../components/List";
+import PageContainer from "../../components/PageContainer";
 import { PostType } from "../types";
 
 export const metadata: Metadata = {
@@ -14,9 +14,8 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function PostsPage() {
-
-  const postsResponse = await fetch('http://localhost:3000/api/posts')
-  const { posts }: { posts: PostType[] } = await postsResponse.json()
+  const postsResponse = await fetch("http://localhost:3000/api/posts");
+  const { posts }: { posts: PostType[] } = await postsResponse.json();
 
   return (
     <PageContainer>

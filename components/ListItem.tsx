@@ -1,5 +1,5 @@
-import { PostType } from "../types"
-import Image from "next/image"
+import { PostType } from "../app/types";
+import Image from "next/image";
 
 export default function ListItem({ post }: { post: PostType }) {
   return (
@@ -19,5 +19,5 @@ export default function ListItem({ post }: { post: PostType }) {
         {post.subtitle && <p className="text-sm text-muted">{post.subtitle}</p>}
       </div>
     </article>
-  )
+  );
 }
