@@ -22,6 +22,9 @@ export default async function ServerSide({
   const postsResponse = await fetch(
     `https://jsonfakery.com/blogs/paginated?page=${page}`,
   );
+  if (!postsResponse.ok) {
+    throw new Error("Failed to fetch posts");
+  }
   const { data: posts, last_page }: PaginatedResponse =
     await postsResponse.json();
 

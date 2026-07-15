@@ -15,6 +15,9 @@ export const dynamic = "force-dynamic";
 
 export default async function PostsPage() {
   const postsResponse = await fetch("http://localhost:3000/api/posts");
+  if (!postsResponse.ok) {
+    throw new Error("Failed to fetch posts");
+  }
   const { posts }: { posts: PostType[] } = await postsResponse.json();
 
   return (
