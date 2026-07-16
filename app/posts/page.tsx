@@ -22,7 +22,10 @@ export default async function PostsPage() {
   if (!postsResponse.ok) {
     throw new Error(`Failed to fetch posts for base url ${baseUrl}`);
   }
-  const { posts }: { posts: PostType[] } = await postsResponse.json();
+  console.warn('Posts response was', postsResponse)
+  const jsonPosts = await postsResponse.json()
+  console.warn('Posts json was', jsonPosts)
+  const { posts }: { posts: PostType[] } = jsonPosts;
 
   return (
     <>
