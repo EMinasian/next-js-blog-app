@@ -10,3 +10,7 @@ export function getPaginatedPosts(page: number, perPage: number) {
     last_page: Math.max(1, Math.ceil(ALL_POSTS.length / perPage)),
   };
 }
+
+export function getPostById(postId: string) {
+  return ALL_POSTS.find((post) => post.id === postId) ?? null;
+}
