@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function PostsPage() {
+  console.warn('In posts page')
   const baseUrl = getBaseUrl();
   console.warn('Base url was', baseUrl)
   const postsResponse = await fetch(`${baseUrl}/api/posts`);
