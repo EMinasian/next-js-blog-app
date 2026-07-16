@@ -12,6 +12,6 @@ export function getBaseUrl(): string {
   if (process.env.VERCEL_URL) {
     url = `https://${process.env.VERCEL_URL}`;
   }
-  console.log('Base url was', url)
+  console.warn('Base url was', url)
   return url ?? "http://localhost:3000";
 }
