@@ -5,11 +5,13 @@
  * local dev.
  */
 export function getBaseUrl(): string {
+  let url: string | undefined = undefined;
   if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL;
+    url = process.env.NEXT_PUBLIC_SITE_URL;
   }
   if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+    url = `https://${process.env.VERCEL_URL}`;
   }
-  return "http://localhost:3000";
+  console.log('Base url was', url)
+  return url ?? "http://localhost:3000";
 }
