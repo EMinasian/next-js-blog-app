@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect } from "react"
 import { getButtonClassName } from "./Button"
+import { useRouteInfoPopup } from "./RouteInfoPopupContext"
 
 export type InfoSection = {
   label: string
@@ -19,9 +20,16 @@ export default function RouteInfoPopup({
   sections,
   githubUrl,
 }: RouteInfoPopupProps) {
-  const [open, setOpen] = useState(true)
+  const { isOpen, close, registerPopup, unregisterPopup } =
+    useRouteInfoPopup()
 
-  if (!open) return null
+  useEffect(() => {
+    registerPopup()
+    return () => unregisterPopup()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (!isOpen) return null
 
   return (
     <div className="fixed left-4 top-4 z-50 w-[calc(100vw-2rem)] max-w-sm rounded-lg border border-border bg-surface p-4 shadow-lg">
@@ -32,7 +40,7 @@ export default function RouteInfoPopup({
         <button
           type="button"
           aria-label="Close"
-          onClick={() => setOpen(false)}
+          onClick={close}
           className="-mr-1 -mt-1 shrink-0 rounded-md p-1 text-muted transition-colors hover:bg-subtle-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
         >
           <svg

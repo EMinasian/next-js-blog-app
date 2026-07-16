@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useEffect, useId, useRef, useState } from "react"
+import { useRouteInfoPopup } from "./RouteInfoPopupContext"
 
 const PAGINATION_ROUTES = [
   { href: "/pagination-examples/client-side", label: "Client-side" },
@@ -19,6 +20,7 @@ export default function Nav() {
   const menuRef = useRef<HTMLDivElement>(null)
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const { hasPopup, open: openInfoPopup } = useRouteInfoPopup()
 
   useEffect(() => {
     // next-themes' hydration-safe mount flag: no async boundary is possible here,
@@ -129,7 +131,31 @@ export default function Nav() {
           </div>
         </div>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-1">
+          {hasPopup && (
+            <button
+              type="button"
+              aria-label="Show route info"
+              onClick={openInfoPopup}
+              className="rounded-md p-2 text-muted transition-colors hover:bg-subtle-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 16v-4" />
+                <path d="M12 8h.01" />
+              </svg>
+            </button>
+          )}
           <button
             type="button"
             aria-label={

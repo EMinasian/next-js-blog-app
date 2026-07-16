@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lora } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import Nav from "../components/Nav";
+import { RouteInfoPopupProvider } from "../components/RouteInfoPopupContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -39,8 +40,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Nav />
-          {children}
+          <RouteInfoPopupProvider>
+            <Nav />
+            {children}
+          </RouteInfoPopupProvider>
         </ThemeProvider>
       </body>
     </html>
