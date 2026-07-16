@@ -13,12 +13,13 @@ import { PostType } from "../../types";
 export const dynamic = "force-dynamic";
 
 async function getPost(postId: string) {
-  const response = await fetch(`${getBaseUrl()}/api/posts/${postId}`);
+  const baseUrl = getBaseUrl();
+  const response = await fetch(`${baseUrl}/api/posts/${postId}`);
   if (response.status === 404) {
     return null;
   }
   if (!response.ok) {
-    throw new Error("Failed to fetch post");
+    throw new Error(`Failed to fetch post for base url ${baseUrl}`);
   }
   const { post }: { post: PostType } = await response.json();
   return post;

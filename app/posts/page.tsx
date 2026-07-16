@@ -17,9 +17,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function PostsPage() {
-  const postsResponse = await fetch(`${getBaseUrl()}/api/posts`);
+  const baseUrl = getBaseUrl();
+  const postsResponse = await fetch(`${baseUrl}/api/posts`);
   if (!postsResponse.ok) {
-    throw new Error("Failed to fetch posts");
+    throw new Error(`Failed to fetch posts for base url ${baseUrl}`);
   }
   const { posts }: { posts: PostType[] } = await postsResponse.json();
 

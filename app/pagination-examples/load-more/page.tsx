@@ -27,9 +27,10 @@ export default async function LoadMore({
 
   const getCachedData = unstable_cache(
     async (): Promise<PostsResponse> => {
-      const postsResponse = await fetch(`${getBaseUrl()}/api/posts`);
+      const baseUrl = getBaseUrl();
+      const postsResponse = await fetch(`${baseUrl}/api/posts`);
       if (!postsResponse.ok) {
-        throw new Error("Failed to fetch posts");
+        throw new Error(`Failed to fetch posts for base url ${baseUrl}`);
       }
       return await postsResponse.json();
     },

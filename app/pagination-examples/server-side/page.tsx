@@ -22,11 +22,12 @@ export default async function ServerSide({
 }) {
   const page = Number((await searchParams)?.page) || 1;
 
+  const baseUrl = getBaseUrl();
   const postsResponse = await fetch(
-    `${getBaseUrl()}/api/posts/paginated?page=${page}`,
+    `${baseUrl}/api/posts/paginated?page=${page}`,
   );
   if (!postsResponse.ok) {
-    throw new Error("Failed to fetch posts");
+    throw new Error(`Failed to fetch posts for base url ${baseUrl}`);
   }
   const { data: posts, last_page }: PaginatedResponse =
     await postsResponse.json();
