@@ -5,6 +5,7 @@ import PageContainer from "@/components/PageContainer";
 import RouteInfoPopup from "@/components/RouteInfoPopup";
 import { SERVER_SIDE_PAGINATION_ROUTE_INFO } from "@/components/RouteInfoPopup.consts";
 import Pagination from "./pagination";
+import { getBaseUrl } from "@/lib/get-base-url";
 import { PostType } from "@/app/types";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default async function ServerSide({
   const page = Number((await searchParams)?.page) || 1;
 
   const postsResponse = await fetch(
-    `https://jsonfakery.com/blogs/paginated?page=${page}`,
+    `${getBaseUrl()}/api/posts/paginated?page=${page}`,
   );
   if (!postsResponse.ok) {
     throw new Error("Failed to fetch posts");

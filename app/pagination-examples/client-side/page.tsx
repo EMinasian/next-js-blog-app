@@ -23,11 +23,11 @@ export default function ClientSide() {
   useEffect(() => {
     (async () => {
       try {
-        const postsResponse = await fetch("https://jsonfakery.com/blogs");
+        const postsResponse = await fetch("/api/posts");
         if (!postsResponse.ok) {
           throw new Error("Failed to fetch posts");
         }
-        const posts: PostType[] = await postsResponse.json();
+        const { posts }: { posts: PostType[] } = await postsResponse.json();
         setPosts(posts);
         setError(null);
       } catch {

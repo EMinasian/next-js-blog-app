@@ -35,7 +35,7 @@ export const SERVER_SIDE_PAGINATION_ROUTE_INFO: RouteInfoContent = {
   sections: [
     {
       label: "Rendering",
-      text: "Server Component — the page search param is forwarded straight to the external API's own ?page= endpoint, so the remote API does the slicing.",
+      text: "Server Component — the page search param is forwarded to the internal /api/posts/paginated route, which does the slicing.",
     },
     {
       label: "Hooks",
