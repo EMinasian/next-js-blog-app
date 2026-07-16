@@ -18,6 +18,7 @@ export const dynamic = "force-dynamic";
 
 export default async function PostsPage() {
   const baseUrl = getBaseUrl();
+  console.warn('Base url was', baseUrl)
   const postsResponse = await fetch(`${baseUrl}/api/posts`);
   if (!postsResponse.ok) {
     throw new Error(`Failed to fetch posts for base url ${baseUrl}`);
