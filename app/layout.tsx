@@ -27,6 +27,13 @@ export const metadata: Metadata = {
   },
   description:
     "A Next Js blog app demonstrating client-side, load-more, and server-side pagination patterns.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
